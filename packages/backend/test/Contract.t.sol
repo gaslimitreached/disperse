@@ -14,4 +14,15 @@ contract ContractTest is Test {
     function testGreeter() public {
         assertEq(greeter.greet(), "hello");
     }
+
+    function testSetGreeting() public {
+        greeter.setGreeting("changed");
+        assertEq(greeter.greet(), "changed");
+    }
+
+    function testSetGreetingByAnyone(address any) public {
+        vm.prank(any);
+        greeter.setGreeting("changed");
+        assertEq(greeter.greet(), "changed");
+    }
 }
