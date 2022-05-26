@@ -1,6 +1,6 @@
 import { useContractRead } from 'wagmi'
 import { constants } from '../constants'
-import { useMounted } from '../hooks/mounted'
+import { useIsMounted } from '../hooks/useIsMounted'
 
 export const Greeter = () => {
   const { data } = useContractRead(
@@ -11,10 +11,11 @@ export const Greeter = () => {
     'greet',
     {
       watch: true,
+      onError: (error) => {console.log(error)}
     },
   )
 
-  const mounted = useMounted()
+  const mounted = useIsMounted()
   if (!mounted) return null
 
   return <p>{data}</p>
