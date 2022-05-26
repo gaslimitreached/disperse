@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "make build",
-    "chain": "anvil -a 1",
+    "chain": "anvil",
     "clean": "make clean",
     "compile": "make build",
     "deploy": "make deploy",
