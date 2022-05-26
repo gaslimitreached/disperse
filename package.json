@@ -1,0 +1,28 @@
+{
+  "name": "dapp",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "dev": "yarn workspace @dapp/frontend dev",
+    "build": "yarn workspace @dapp/frontend build",
+    "test": "yarn workspace @dapp/backend test",
+    "chain": "yarn workspace @dapp/backend chain",
+    "clean": "yarn workspace @dapp/backend clean",
+    "deploy": "yarn workspace @dapp/backend deploy",
+    "compile": "yarn workspace @dapp/backend compile"
+  },
+  "author": "",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/@graphprotocol/graph-ts",
+      "**/@graphprotocol/graph-ts/**",
+      "**/backend",
+      "**/backend/**"
+    ]
+  }
+}

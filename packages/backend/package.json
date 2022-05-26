@@ -1,0 +1,18 @@
+{
+  "name": "@dapp/backend",
+  "version": "0.1.0",
+  "description": "solidity backend",
+  "private": true,
+  "scripts": {
+    "build": "make build",
+    "chain": "anvil -a 1",
+    "clean": "make clean",
+    "compile": "make build",
+    "deploy": "make deploy",
+    "lint": "solhint 'src/**/*.sol'",
+    "test": "forge test"
+  },
+  "devDependencies": {
+    "solhint": "^3.3.6"
+  }
+}
