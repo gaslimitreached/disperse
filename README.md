@@ -3,8 +3,7 @@
 Solidity development monorepo
 
 backend
-    - foundry
-    - hardhat
+    - [foundry](https://github.com/foundry-rs/foundry)
 
 frontend
   - [NextJS](https://github.com/vercel/next.js/tree/canary/packages/create-next-app)
