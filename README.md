@@ -1,6 +1,6 @@
-# Dapp Template
+# Disperse
 
-Solidity development monorepo
+Payment dispersal using [Multicall3](https://github.com/mds1/multicall). Inspired by <https://disperse.app>.
 
 backend
     - [foundry](https://github.com/foundry-rs/foundry)
