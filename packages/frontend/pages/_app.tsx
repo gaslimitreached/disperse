@@ -14,6 +14,7 @@ import { StaticJsonRpcProvider, WebSocketProvider } from '@ethersproject/provide
 import { constants } from '../constants'
 
 const defaultChains: Chain[] = [
+  chain.rinkeby,
   chain.goerli,
   {
     id: 31337,

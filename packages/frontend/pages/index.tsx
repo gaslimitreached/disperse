@@ -3,10 +3,17 @@ import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import { constants } from '../constants'
-import { Greeter } from '../components/Greet'
-import { ChangeGreeting } from '../components/ChangeGreeting'
+import { DispersePayments } from '../components/DispersePayments'
+import { useState, ChangeEventHandler } from 'react';
 
 const Home: NextPage = () => {
+  const [token ,setToken] = useState('');
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
+    e.preventDefault()
+    setToken(e.target.value)
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -19,13 +26,12 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           {constants.appName}
         </h1>
-
-        <div className={styles.description}>
-        </div>
-
         <ConnectButton />
-        <Greeter />
-        <ChangeGreeting />
+        <br />
+        <label>Token Address:</label>
+        <input type="text" value={token} onChange={handleChange} />
+        
+        <DispersePayments token={token} />
       </main>
       <footer className={styles.footer} />
     </div>

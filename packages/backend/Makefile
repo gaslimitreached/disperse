@@ -19,7 +19,7 @@ install :;
 update:; forge update
 
 # Builds
-build  :; forge clean && forge build --optimize --optimizer-runs 200
+build  :; forge clean && forge build --optimize --optimizer-runs 1_000_000
 
 # Deploy
-deploy :; forge create Contract --interactive && cp ./out/Contract.sol/*.json ../frontend/contracts
+deploy :; forge create Payments --interactive && cp ./out/Payments.sol/*.json ../frontend/contracts
