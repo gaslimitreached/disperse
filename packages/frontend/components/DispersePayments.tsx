@@ -53,16 +53,7 @@ export const DispersePayments = ({ token }: DispersePaymentsProps) => {
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
-    console.log(token)
-    try {
-      // Validate token: throws if the address is invalid.
-      utils.getAddress(token);
-    } catch (error) {
-      // TODO: toast
-      console.log('we made a boo boo')
-      console.error(error)
-      return
-    }
+
     // parse entry into targest and amounts
     parseEntry()
     
