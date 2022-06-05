@@ -1,7 +1,8 @@
-import { utils } from 'ethers'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { useContractWrite, useSigner } from 'wagmi'
 import { constants } from '../constants'
+import { DisplayPayout } from './DisplayPayouts'
+import { TotalAmount } from './TotalAmounts'
 
 interface DispersePaymentsProps {
   token: string
@@ -40,9 +41,8 @@ export const DispersePayments = ({ token }: DispersePaymentsProps) => {
 
     lines.forEach(line => {
       const [target, amount] = line.split(',')
-      console.log(target, amounts)
       if (target && amount && !isNaN(parseInt(amount.trim()))) {
-        targets.push(target.trim())
+        recipients.push(target.trim())
         amounts.push(parseInt(amount.trim()))
       }
     })
@@ -56,7 +56,6 @@ export const DispersePayments = ({ token }: DispersePaymentsProps) => {
 
     // parse entry into targest and amounts
     parseEntry()
-    
     write()
   }
 
@@ -67,17 +66,29 @@ export const DispersePayments = ({ token }: DispersePaymentsProps) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <textarea
-        rows={5}
-        cols={20}
-        value={entry}
-        onChange={handleChange}
-      />
-      <br />
-      <input disabled={isLoading} type="submit" value="Disperse" />
-      <br />
-      <label>Address and amount seperated by a comma. One target per line.</label> 
-    </form>
+    <div style={{ textAlign: "center" }}>
+      <form onSubmit={handleSubmit}>
+        <textarea
+          rows={5}
+          cols={43}
+          value={entry}
+          onChange={handleChange}
+        />
+        <br />
+        <input disabled={isLoading} type="submit" value="Disperse" />
+        <br />
+        <label>Address and amount seperated by a comma. One target per line.</label> 
+      </form>
+      {
+        amounts.length > 0
+        ? (
+          <>
+            <DisplayPayout targets={targets} amounts={amounts} />
+            <TotalAmount amounts={amounts} />
+          </>
+          )
+        : (<></>)
+      }
+    </div>
   )
 }

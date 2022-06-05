@@ -1,14 +1,17 @@
 import type { NextPage } from 'next'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import { constants } from '../constants'
+import { utils } from 'ethers';
 import { DispersePayments } from '../components/DispersePayments'
 import { useState, ChangeEventHandler, FormEventHandler } from 'react';
-import { utils } from 'ethers';
+import { Balance } from '../components/Balance'
+
+import styles from '../styles/Home.module.css'
+import { constants } from '../constants'
 
 const Home: NextPage = () => {
   const [token ,setToken] = useState('');
+  const [valid, setValid] = useState(false);
   const [error, setError] = useState('');
 
   const handleChange: ChangeEventHandler<HTMLInputElement> = async (e) => {
@@ -25,9 +28,9 @@ const Home: NextPage = () => {
     }
 
     try {
-      // Validate token: throws if the address is invalid.
       utils.getAddress(token)
       setError('')
+      setValid(true)
     } catch (error: any) {
       // TODO: toast
       if (error.message.includes('invalid address')) {
@@ -54,14 +57,20 @@ const Home: NextPage = () => {
         <ConnectButton />
         <br />
         <form onSubmit={handleSubmit}>
-          <label>Token Address:</label>
-          <input type="text" value={token} onChange={handleChange} />
-          <button type="submit">Submit</button>
+          <input
+            placeholder="Token Address"
+            type="text"
+            value={token}
+            onChange={handleChange}
+            size={46}
+          />
+          <button type="submit">Next</button>
           <br />
           <label style={{ color: "red" }}>{ error ? error : ''}</label>
 
         </form>
-        <DispersePayments token={token} />
+        { valid && token.length ? <Balance token={token} /> : <></>}
+        { valid && token.length ? <DispersePayments token={token} /> : <></>}
       </main>
       <footer className={styles.footer} />
     </div>
