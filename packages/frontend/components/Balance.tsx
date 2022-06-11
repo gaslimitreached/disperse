@@ -2,7 +2,7 @@ import { useAccount, useBalance } from 'wagmi'
 import { useIsMounted } from '../hooks/useIsMounted'
 
 interface BalanceProps {
-  token: string
+  token?: string
 }
 
 export const Balance = ({ token }: BalanceProps) => {

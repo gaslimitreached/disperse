@@ -2,6 +2,6 @@ import Contract from './contracts/Payments.json';
 
 export const constants: any = {
   appName: 'Disperse',
-  contractAddress: '0xfb3a7d4cda276f3ed98e4aca2d6318bcd9751859',
+  contractAddress: '0x6d9e6b262b10a316a188339043323fedfee21fca',
   contractInterface: Contract.abi,
 }

@@ -1,14 +1,15 @@
+import { utils } from 'ethers'
 import { ChangeEventHandler, FormEventHandler, useState } from 'react'
 import { useContractWrite, useSigner } from 'wagmi'
 import { constants } from '../constants'
 import { DisplayPayout } from './DisplayPayouts'
 import { TotalAmount } from './TotalAmounts'
 
-interface DispersePaymentsProps {
+interface TokenDispersalForm {
   token: string
 }
 
-export const DispersePayments = ({ token }: DispersePaymentsProps) => {
+export const TokenDispersalForm  = ({ token }: TokenDispersalForm) => {
   const [entry, setEntry] = useState('')
   const [targets, setTargets] = useState([''])
   const [amounts, setAmounts] = useState([0])
@@ -22,7 +23,7 @@ export const DispersePayments = ({ token }: DispersePaymentsProps) => {
     },
     'disperse',
     {
-      args: [token, targets, amounts],
+      args: [token, targets, amounts.map(a => { utils.parseEther(a.toString()) })],
       onSuccess: () => { resestStates() },
       onError: (error) => { console.log(error) }
     }
