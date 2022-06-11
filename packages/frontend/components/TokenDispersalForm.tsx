@@ -17,8 +17,8 @@ export const TokenDispersalForm  = ({ token }: TokenDispersalForm) => {
   const { data: signer } = useSigner();
   const { isLoading, write } = useContractWrite(
     {
-      addressOrName: constants.contractAddress,
-      contractInterface: constants.contractInterface,
+      addressOrName: constants.CONTRACTS.DISPERSER.ADDRESS,
+      contractInterface: constants.CONTRACTS.DISPERSER.ABI,
       signerOrProvider: signer,
     },
     'disperse',

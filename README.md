@@ -29,3 +29,5 @@ yarn && cd packages/backend && make && cd -
 ## Usage
 
 Contract deploymens require updates to `./packages/frontend/contsants.ts` unless using pre-computed address.
+
+Goerli:  0xb78bdcf3957f2eD7EB957fCBBF1Cf8Ca8314D67e

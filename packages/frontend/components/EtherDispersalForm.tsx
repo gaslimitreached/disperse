@@ -14,9 +14,9 @@ export const EtherDispersalForm  = () => {
 
   const { isLoading, write } = useContractWrite(
     {
-      addressOrName: constants.contractAddress,
-      contractInterface: constants.contractInterface,
-      signerOrProvider: signer,
+      addressOrName: constants.CONTRACTS.DISPERSER.ADDRESS,
+      contractInterface: constants.CONTRACTS.DISPERSER.ABI,
+      signerOrProvider: signer
     },
     'disperseEther',
     {

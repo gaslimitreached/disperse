@@ -14,15 +14,20 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{constants.appName}</title>
-        <meta name="description" content={constants.description?? constants.appName} />
+        <title>{constants.APP_NAME}</title>
+        <meta name="description" content={constants.DESCRIPTION?? constants.APP_NAME} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          {constants.appName}
+          {constants.APP_NAME}
         </h1>
+        {
+          constants.NODE_ENV === 'development'
+          ? <a href={`https://etherscan.io/address/${constants.CONTRACTS.DISPERSER.ADDRESS}`}>{ constants.CONTRACTS.DISPERSER.ADDRESS }</a>
+          : <></>
+        }
         <ConnectButton />
         <br />
         <button onClick={() => { setMechanism('eth')} }>Eth</button>
