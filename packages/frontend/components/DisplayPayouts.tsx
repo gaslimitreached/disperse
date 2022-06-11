@@ -11,6 +11,6 @@ const arrangePayouts = (targets: string[], amounts: number[]) => {
 
 export const DisplayPayout = ({ targets, amounts }: DisplayPayoutProps) => {
   const payouts = arrangePayouts(targets, amounts)
-  const elems = payouts.map(([target, amount]) => <p>{target + " -> " + amount}</p>)
+  const elems = payouts.map(([target, amount], i) => <p key={`${target}-${i}`}>{target + " -> " + amount}</p>)
   return <div>{ elems.length > 0 ? elems : <></>}</div>
 }

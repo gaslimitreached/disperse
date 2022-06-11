@@ -14,6 +14,5 @@ export const Balance = ({ token }: BalanceProps) => {
 
   const mounted = useIsMounted()
   if (!mounted) return null
-  console.log(balance?.symbol)
   return <p>You have {balance?.formatted} {balance?.symbol}</p>
 }

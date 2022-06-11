@@ -1,5 +1,5 @@
 import { utils } from 'ethers'
-import { ChangeEventHandler, FormEventHandler, useState } from 'react'
+import { ChangeEventHandler, FormEventHandler, useRef, useState } from 'react'
 import { useContractWrite, useSigner } from 'wagmi'
 import { constants } from '../constants'
 import { DisplayPayout } from './DisplayPayouts'
@@ -7,8 +7,8 @@ import { TotalAmount } from './TotalAmounts'
 
 export const EtherDispersalForm  = () => {
   const [entry, setEntry] = useState('')
-  const [targets, setTargets] = useState([''])
-  const [amounts, setAmounts] = useState([0])
+  const targets = useRef(['']);
+  const amounts = useRef([0]);
 
   const { data: signer } = useSigner();
 
@@ -20,11 +20,6 @@ export const EtherDispersalForm  = () => {
     },
     'disperseEther',
     {
-      args: [targets, amounts],
-      overrides: {
-        value: utils.parseEther(
-          amounts.reduce((prev, curr) => prev + curr, 0).toString())
-      },
       onSuccess: () => { resestStates() },
       onError: (error) => { console.log(error) }
     }
@@ -32,33 +27,41 @@ export const EtherDispersalForm  = () => {
 
   const resestStates: Function = (): void => {
     setEntry('')
-    setTargets([])
-    setAmounts([])
+    targets.current = []
+    amounts.current = []
   }
 
   const parseEntry: Function = (): void => {
-    const lines = entry.split('\n')
+    const lines = entry.split('\n').filter(lines => lines.length > 0)
     const recipients: string[] = [];
-    const amounts: number[] = [];
+    const dispersals: number[] = [];
 
     lines.forEach(line => {
       const [target, amount] = line.split(',')
-      if (target && amount && !isNaN(parseInt(amount.trim()))) {
+      if (target && amount && !isNaN(parseFloat(amount.trim()))) {
         recipients.push(target.trim())
-        amounts.push(parseInt(amount.trim()))
+        dispersals.push(parseFloat(amount.trim()))
       }
     })
-    setTargets(recipients)
-    setAmounts(amounts)
-    console.log(...targets, ...amounts)
+    targets.current = recipients
+    amounts.current = dispersals
   }
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
 
-    // parse entry into targest and amounts
     parseEntry()
-    write()
+
+    write({
+      args: [
+        targets.current,
+        amounts.current.map(a => utils.parseEther(a.toString()))
+      ],
+      overrides: {
+        value: utils.parseEther(
+          amounts.current.reduce((prev, curr) => prev + curr, 0).toString()) 
+      }
+    })
   }
 
   const handleChange: ChangeEventHandler<HTMLTextAreaElement> = async (e) => {
@@ -72,7 +75,7 @@ export const EtherDispersalForm  = () => {
       <form onSubmit={handleSubmit}>
         <textarea
           rows={5}
-          cols={43}
+          cols={50}
           value={entry}
           onChange={handleChange}
         />
@@ -82,11 +85,11 @@ export const EtherDispersalForm  = () => {
         <label>Address and amount seperated by a comma. One target per line.</label> 
       </form>
       {
-        amounts.length > 0
+        amounts.current.length > 0
         ? (
           <>
-            <DisplayPayout targets={targets} amounts={amounts} />
-            <TotalAmount amounts={amounts} />
+            <DisplayPayout targets={targets.current} amounts={amounts.current} />
+            <TotalAmount amounts={amounts.current} />
           </>
           )
         : (<></>)
