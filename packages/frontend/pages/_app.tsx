@@ -13,10 +13,10 @@ import { chain, createClient, WagmiProvider } from 'wagmi'
 import { StaticJsonRpcProvider, WebSocketProvider } from '@ethersproject/providers'
 import { constants } from '../constants'
 
-const defaultChains: Chain[] = [
-  chain.rinkeby,
-  chain.goerli,
-  {
+const defaultChains: Chain[] = [chain.goerli]
+
+if (constants.NODE_ENV == 'development') {
+  defaultChains.push({
     id: 31337,
     name: 'Local Chain',
     nativeCurrency: {
@@ -26,8 +26,8 @@ const defaultChains: Chain[] = [
     },
     rpcUrls: { default: 'http://127.0.0.1:8545' },
     testnet: true,
-  }
-]
+  })
+}
 
 const apiProviders: ApiProvider<StaticJsonRpcProvider, WebSocketProvider>[] = [
   apiProvider.alchemy(process.env.ALCHEMY_ID),
@@ -35,7 +35,7 @@ const apiProviders: ApiProvider<StaticJsonRpcProvider, WebSocketProvider>[] = [
 ]
 
 const { chains, provider } = configureChains(defaultChains, apiProviders)
-const { connectors } = getDefaultWallets({ appName: constants.appName, chains })
+const { connectors } = getDefaultWallets({ appName: constants.APP_NAME, chains })
 
 const client = createClient({
   autoConnect: true,
